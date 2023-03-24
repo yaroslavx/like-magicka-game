@@ -19,21 +19,21 @@ window.addEventListener("load", function () {
       this.speedModifier = 5;
     }
 
-    draw(contex) {
-      contex.beginPath();
-      contex.arc(
+    draw(context) {
+      context.beginPath();
+      context.arc(
         this.collisionX,
         this.collisionY,
         this.collisionRadius,
         0,
         Math.PI * 2
       );
-      contex.fill();
-      contex.stroke();
-      contex.beginPath();
-      contex.moveTo(this.collisionX, this.collisionY);
-      contex.lineTo(this.game.mouse.x, this.game.mouse.y);
-      contex.stroke();
+      context.fill();
+      context.stroke();
+      context.beginPath();
+      context.moveTo(this.collisionX, this.collisionY);
+      context.lineTo(this.game.mouse.x, this.game.mouse.y);
+      context.stroke();
     }
 
     update() {
@@ -57,19 +57,37 @@ window.addEventListener("load", function () {
       this.game = game;
       this.collisionX = Math.random() * this.game.width;
       this.collisionY = Math.random() * this.game.height;
-      this.collisionRadius = 100;
+      this.collisionRadius = 55;
+      this.image = document.getElementById("obstacles");
+      this.spriteWidth = 250;
+      this.spriteHeight = 250;
+      this.width = this.spriteWidth;
+      this.heigth = this.spriteHeight;
+      this.spriteX = this.collisionX - this.width * 0.5;
+      this.spriteY = this.collisionY - this.heigth * 0.5 - 70;
     }
-    draw(contex) {
-      contex.beginPath();
-      contex.arc(
+    draw(context) {
+      context.drawImage(
+        this.image,
+        0,
+        0,
+        this.spriteWidth,
+        this.spriteHeight,
+        this.spriteX,
+        this.spriteY,
+        this.width,
+        this.heigth
+      );
+      context.beginPath();
+      context.arc(
         this.collisionX,
         this.collisionY,
         this.collisionRadius,
         0,
         Math.PI * 2
       );
-      contex.fill();
-      contex.stroke();
+      context.fill();
+      context.stroke();
     }
   }
 
@@ -79,7 +97,7 @@ window.addEventListener("load", function () {
       this.width = this.canvas.width;
       this.height = this.canvas.height;
       this.player = new Player(this);
-      this.numberOfObstacles = 5;
+      this.numberOfObstacles = 7;
       this.obstacles = [];
       this.mouse = {
         x: this.width * 0.5,
